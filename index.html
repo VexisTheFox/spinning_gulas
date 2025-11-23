@@ -5,7 +5,6 @@
   <title>Spinning Goulash</title>
   <style>
     :root {
-      /* fallback value, will be overwritten by JS variable below */
       --rotation-duration: 8s;
     }
 
@@ -48,6 +47,7 @@
       left: 10px;
       font-size: 14px;
       opacity: 0.8;
+      z-index: 10;
     }
 
     .credits a {
@@ -59,37 +59,81 @@
       text-decoration: underline;
       opacity: 1;
     }
+
+    /* ENTER SITE OVERLAY */
+    #enter-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #enter-btn {
+      padding: 18px 40px;
+      font-size: 22px;
+      font-family: system-ui, sans-serif;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #fff;
+      color: #000;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    #enter-btn:hover {
+      background: #dcdcdc;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="/goulash.png" alt="Goulash" class="goulash" />
+  <!-- overlay -->
+  <div id="enter-overlay">
+    <button id="enter-btn">ENTER SITE</button>
   </div>
 
+  <!-- credits -->
   <div class="credits">
     made by
     <a href="https://vexi123.cn" target="_blank" rel="noopener noreferrer">vexi</a>
   </div>
 
-  <!-- tries to start immediately and loop forever -->
-  <audio id="bg-audio" src="/sound.mp3" autoplay loop></audio>
+  <!-- main content -->
+  <div class="container">
+    <img src="goulash.png" alt="Goulash" class="goulash" />
+  </div>
+
+  <!-- background audio (will be started by JS on click) -->
+  <audio id="bg-audio" src="sound.mp3" loop></audio>
 
   <script>
-    // ===== rotation speed variable (in seconds) =====
-    const ROTATION_SPEED_SECONDS = 4;
-
-    // apply variable to CSS custom property
+    // ===== rotation speed variable (seconds per full spin) =====
+    const ROTATION_SPEED_SECONDS = 4; 
+    // apply rotation speed to CSS variable
     document.documentElement.style.setProperty(
       '--rotation-duration',
       ROTATION_SPEED_SECONDS + 's'
     );
 
-    // try to force audio to play immediately
+    // handle ENTER SITE click
+    const overlay = document.getElementById('enter-overlay');
+    const btn = document.getElementById('enter-btn');
     const audio = document.getElementById('bg-audio');
-    if (audio) {
-      audio.play().catch(() => {
-      });
-    }
+
+    btn.addEventListener('click', () => {
+      // hide overlay
+      overlay.style.display = 'none';
+
+      // start audio (fixed audio not playing)
+      if (audio) {
+        audio.play().catch(() => {
+        });
+      }
+    });
   </script>
 </body>
 </html>
