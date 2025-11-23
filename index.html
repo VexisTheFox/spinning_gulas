@@ -63,8 +63,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- replace goulash.png with your real image filename -->
-    <img src="goulash.png" alt="Goulash" class="goulash" />
+    <img src="/goulash.png" alt="Goulash" class="goulash" />
   </div>
 
   <div class="credits">
@@ -73,11 +72,11 @@
   </div>
 
   <!-- tries to start immediately and loop forever -->
-  <audio id="bg-audio" src="sound.mp3" autoplay loop></audio>
+  <audio id="bg-audio" src="/sound.mp3" autoplay loop></audio>
 
   <script>
     // ===== rotation speed variable (in seconds) =====
-    const ROTATION_SPEED_SECONDS = 4; // change this to make it faster/slower
+    const ROTATION_SPEED_SECONDS = 4;
 
     // apply variable to CSS custom property
     document.documentElement.style.setProperty(
@@ -89,8 +88,6 @@
     const audio = document.getElementById('bg-audio');
     if (audio) {
       audio.play().catch(() => {
-        // If the browser blocks autoplay, nothing you can do here
-        // without user interaction – that's just how modern browsers work.
       });
     }
   </script>
